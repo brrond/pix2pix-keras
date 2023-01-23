@@ -1,4 +1,6 @@
 import tensorflow as tf
+import numpy as np
+
 
 LAMBDA = 100
 binary_crossentropy = tf.keras.losses.BinaryCrossentropy(from_logits=True)
