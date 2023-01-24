@@ -2,7 +2,7 @@ from .utils import tf, np
 
 
 class DataGenerator(tf.keras.utils.Sequence):
-    def __init__(self, discriminator, images, read_func, batch_size=16, train_test_split: float=1.):
+    def __init__(self, images, read_func, batch_size=16, train_test_split: float=1.):
         self.images = np.array(images)
         self.batch_size = batch_size
         
@@ -13,7 +13,6 @@ class DataGenerator(tf.keras.utils.Sequence):
         self.images = self.images[:split_size] if train_test_split > 0. else self.images[split_size:]
         print(len(self.images), 'train' if train_test_split > 0. else 'test', 'images found')
 
-        self.discriminator = discriminator
         self.read_func = read_func
 
     def __len__(self):
@@ -31,6 +30,5 @@ class DataGenerator(tf.keras.utils.Sequence):
         xs = np.array(xs)
         ys = np.array(ys)
 
-        y_ds = self.discriminator([xs, ys], training=True)
-        return xs, [ys, y_ds]
+        return xs, ys
 

@@ -1,8 +1,8 @@
 from .utils import *
 
 
-class Unet(tf.keras.Model):
-    def __init__(self, input_shape=(256, 256, 3), output_channels=3):
+def Unet(backbone=None, input_shape=(256, 256, 3), output_channels=3):
+    if backbone is None:
         inputs = tf.keras.layers.Input(shape=input_shape)
 
         down_stack = [
@@ -26,7 +26,7 @@ class Unet(tf.keras.Model):
             create_upsample(64, 4),                         # (batch_size, 128, 128, 128)
         ]
 
-        last = tf.keras.layers.Conv2DTranspose(output_channels, 4, strides=2, padding='same', activation='tanh')  # (batch_size, 256, 256, 3)
+        last = tf.keras.layers.Conv2DTranspose(output_channels, 4, strides=2, padding='same', activation='sigmoid')  # (batch_size, 256, 256, 3)
 
         x = inputs
 
@@ -44,6 +44,6 @@ class Unet(tf.keras.Model):
 
         x = last(x)
 
-        super().__init__(inputs=inputs, outputs=x)
+        return tf.keras.Model(inputs=inputs, outputs=x)
 
 
