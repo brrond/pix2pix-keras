@@ -44,6 +44,6 @@ def Unet(backbone=None, input_shape=(256, 256, 3), output_channels=3):
 
         x = last(x)
 
-        return tf.keras.Model(inputs=inputs, outputs=x)
+        return tf.keras.Model(inputs=inputs, outputs=x, name='simple_unet')
 
 

@@ -18,4 +18,4 @@ def PatchGAN(input_shape=[256, 256, 3]):
     zero_pad2 = tf.keras.layers.ZeroPadding2D()(leaky_relu)  # (batch_size, 33, 33, 512)
 
     last = tf.keras.layers.Conv2D(1, 4, strides=1)(zero_pad2)  # (batch_size, 30, 30, 1)
-    return tf.keras.Model(inputs=[inp, tar], outputs=last)
+    return tf.keras.Model(inputs=[inp, tar], outputs=last, name='simple_unet')
