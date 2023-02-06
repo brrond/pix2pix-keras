@@ -2,6 +2,19 @@ from .utils import tf, create_downsample
 
 
 def PatchGAN(input_shape=[256, 256, 3]):
+    """Generates simple PatchGAN model as tf.keras.Model.
+
+    Parameters
+    ----------
+    input_shape : list
+        The list of shapes of input images.
+
+    Returns
+    -------
+    tf.keras.Model
+        a keras Model that defines PatchGAN discriminator.
+    """
+
     inp = tf.keras.layers.Input(shape=input_shape, name='input_image')
     tar = tf.keras.layers.Input(shape=input_shape, name='target_image')
     x = tf.keras.layers.concatenate([inp, tar])  # (batch_size, 256, 256, channels*2)
@@ -18,4 +31,4 @@ def PatchGAN(input_shape=[256, 256, 3]):
     zero_pad2 = tf.keras.layers.ZeroPadding2D()(leaky_relu)  # (batch_size, 33, 33, 512)
 
     last = tf.keras.layers.Conv2D(1, 4, strides=1)(zero_pad2)  # (batch_size, 30, 30, 1)
-    return tf.keras.Model(inputs=[inp, tar], outputs=last, name='simple_unet')
+    return tf.keras.Model(inputs=[inp, tar], outputs=last, name='simple_patchGAN')

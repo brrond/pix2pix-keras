@@ -3,7 +3,32 @@ from .losses import pix2pix_loss
 
 
 class Pix2Pix(tf.keras.Model):
+    """
+    An implementation of Pix2Pix algorithm. Simple abstraction over keras API.
+    Takes two keras Models (tf.keras.Model). First of them is generator, second one is discriminator.
+    
+    Current class is inherited from keras.Model.
+
+    Attributes
+    ----------
+    generator : tf.keras.Model
+        a model for generator part of the algorithm.
+    discriminator : tf.keras.Model
+        a discriminator model.
+    """
+
+    # TODO: Think about proper way of saving model
+
     def __init__(self, generator: tf.keras.Model, discriminator: tf.keras.Model):
+        """
+        Parameters
+        ----------
+        generator : tf.keras.Model
+            Generator model (U-Net-like or another generative architectures).
+        discriminator : tf.keras.Model
+            Discriminative model for algorithm.
+        """
+
         super().__init__()
         self.generator = generator
         self.discriminator = discriminator
@@ -56,7 +81,6 @@ class Pix2Pix(tf.keras.Model):
         self.l1_loss_tracker.update_state(l1_loss)
         self.discriminator_loss.update_state(disc_loss)
         return {m.name: m.result() for m in self.metrics}
-
 
     @property
     def metrics(self):

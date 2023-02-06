@@ -2,6 +2,21 @@ from .utils import *
 
 
 def Unet(backbone=None, input_shape=(256, 256, 3), output_channels=3):
+    """Creates simple Unet model as tf.keras.Model.
+
+    Parameters
+    ----------
+    backbone : str, None
+        Placeholder for future modifications. Must be None.
+    input_shape : tuple, list
+        A input image shapes.
+
+    Returns
+    -------
+    tf.keras.Model
+        a Model of simple Unet network.
+    """
+
     if backbone is None:
         inputs = tf.keras.layers.Input(shape=input_shape)
 
